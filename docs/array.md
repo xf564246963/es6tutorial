@@ -361,7 +361,7 @@ let arr = [...obj]; // TypeError: Cannot spread non-iterable object
 
 ## Array.from()
 
-`Array.from`方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）。
+==`Array.from`方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）。==
 
 下面是一个类似数组的对象，`Array.from`将它转为真正的数组。
 
@@ -837,7 +837,7 @@ arr.flatMap(function callback(currentValue[, index[, array]]) {
 
 ## 数组的空位
 
-数组的空位指，数组的某一个位置没有任何值。比如，`Array`构造函数返回的数组都是空位。
+==数组的空位指，数组的某一个位置没有任何值。比如，`Array`构造函数返回的数组都是空位。==
 
 ```javascript
 Array(3) // [, , ,]
@@ -845,7 +845,7 @@ Array(3) // [, , ,]
 
 上面代码中，`Array(3)`返回一个具有 3 个空位的数组。
 
-注意，空位不是`undefined`，一个位置的值等于`undefined`，依然是有值的。空位是没有任何值，`in`运算符可以说明这一点。
+==注意，空位不是`undefined`，一个位置的值等于`undefined`，依然是有值的。空位是没有任何值，`in`运算符可以说明这一点。==
 
 ```javascript
 0 in [undefined, undefined, undefined] // true

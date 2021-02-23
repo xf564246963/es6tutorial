@@ -4,9 +4,9 @@
 
 ## Object.is()
 
-ES5 比较两个值是否相等，只有两个运算符：相等运算符（`==`）和严格相等运算符（`===`）。它们都有缺点，前者会自动转换数据类型，后者的`NaN`不等于自身，以及`+0`等于`-0`。JavaScript 缺乏一种运算，在所有环境中，只要两个值是一样的，它们就应该相等。
+==ES5 比较两个值是否相等，只有两个运算符：相等运算符（`==`）和严格相等运算符（`===`）。它们都有缺点，前者会自动转换数据类型，后者的`NaN`不等于自身，以及`+0`等于`-0`。JavaScript 缺乏一种运算，在所有环境中，只要两个值是一样的，它们就应该相等。==
 
-ES6 提出“Same-value equality”（同值相等）算法，用来解决这个问题。`Object.is`就是部署这个算法的新方法。它用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致。
+==ES6 提出“Same-value equality”（同值相等）算法，用来解决这个问题。`Object.is`就是部署这个算法的新方法。它用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致。==
 
 ```javascript
 Object.is('foo', 'foo')
@@ -15,7 +15,7 @@ Object.is({}, {})
 // false
 ```
 
-不同之处只有两个：一是`+0`不等于`-0`，二是`NaN`等于自身。
+==不同之处只有两个：一是`+0`不等于`-0`，二是`NaN`等于自身。==
 
 ```javascript
 +0 === -0 //true
@@ -73,7 +73,7 @@ Object.assign(target, source1, source2);
 target // {a:1, b:2, c:3}
 ```
 
-如果只有一个参数，`Object.assign()`会直接返回该参数。
+==如果只有一个参数，`Object.assign()`会直接返回该参数。（Object.assign的返回值就是被合并之后的target）==
 
 ```javascript
 const obj = {a: 1};
@@ -347,7 +347,7 @@ function getOwnPropertyDescriptors(obj) {
 }
 ```
 
-该方法的引入目的，主要是为了解决`Object.assign()`无法正确拷贝`get`属性和`set`属性的问题。
+==该方法的引入目的，主要是为了解决`Object.assign()`无法正确拷贝`get`属性和`set`属性的问题。==
 
 ```javascript
 const source = {
@@ -366,7 +366,7 @@ Object.getOwnPropertyDescriptor(target1, 'foo')
 //   configurable: true }
 ```
 
-上面代码中，`source`对象的`foo`属性的值是一个赋值函数，`Object.assign`方法将这个属性拷贝给`target1`对象，结果该属性的值变成了`undefined`。这是因为`Object.assign`方法总是拷贝一个属性的值，而不会拷贝它背后的赋值方法或取值方法。
+上面代码中，`source`对象的`foo`属性的值是一个赋值函数，`Object.assign`方法将这个属性拷贝给`target1`对象，结果该属性的值变成了`undefined`。这是==因为`Object.assign`方法总是拷贝一个属性的值，而不会拷贝它背后的赋值方法或取值方法。==
 
 这时，`Object.getOwnPropertyDescriptors()`方法配合`Object.defineProperties()`方法，就可以实现正确拷贝。
 

@@ -232,7 +232,7 @@ const foo = 'bar';
 const baz = { [foo]: 'abc'};
 ```
 
-注意，属性名表达式如果是一个对象，默认情况下会自动将对象转为字符串`[object Object]`，这一点要特别小心。
+==注意，属性名表达式如果是一个对象，默认情况下会自动将对象转为字符串`[object Object]`，这一点要特别小心。==
 
 ```javascript
 const keyA = {a: 1};
@@ -264,7 +264,7 @@ person.sayName.name   // "sayName"
 
 上面代码中，方法的`name`属性返回函数名（即方法名）。
 
-如果对象的方法使用了取值函数（`getter`）和存值函数（`setter`），则`name`属性不是在该方法上面，而是该方法的属性的描述对象的`get`和`set`属性上面，返回值是方法名前加上`get`和`set`。
+==如果对象的方法使用了取值函数（`getter`）和存值函数（`setter`），则`name`属性不是在该方法上面，而是该方法的属性的描述对象的`get`和`set`属性上面，返回值是方法名前加上`get`和`set`。==
 
 ```javascript
 const obj = {
@@ -326,12 +326,12 @@ Object.getOwnPropertyDescriptor(obj, 'foo')
 
 描述对象的`enumerable`属性，称为“可枚举性”，如果该属性为`false`，就表示某些操作会忽略当前属性。
 
-目前，有四个操作会忽略`enumerable`为`false`的属性。
+==目前，有四个操作会忽略`enumerable`为`false`的属性。==
 
-- `for...in`循环：只遍历对象自身的和继承的可枚举的属性。
-- `Object.keys()`：返回对象自身的所有可枚举的属性的键名。
-- `JSON.stringify()`：只串行化对象自身的可枚举的属性。
-- `Object.assign()`： 忽略`enumerable`为`false`的属性，只拷贝对象自身的可枚举的属性。
+- ==`for...in`循环：只遍历对象自身的和继承的可枚举的属性。==
+- ==`Object.keys()`：返回对象自身的所有可枚举的属性的键名。==
+- ==`JSON.stringify()`：只串行化对象自身的可枚举的属性。==
+- ==`Object.assign()`： 忽略`enumerable`为`false`的属性，只拷贝对象自身的可枚举的属性。==
 
 这四个操作之中，前三个是 ES5 就有的，最后一个`Object.assign()`是 ES6 新增的。其中，只有`for...in`会返回继承的属性，其他三个方法都会忽略继承的属性，只处理对象自身的属性。实际上，引入“可枚举”（`enumerable`）这个概念的最初目的，就是让某些属性可以规避掉`for...in`操作，不然所有内部属性和方法都会被遍历到。比如，对象原型的`toString`方法，以及数组的`length`属性，就通过“可枚举性”，从而避免被`for...in`遍历到。
 
@@ -345,7 +345,7 @@ Object.getOwnPropertyDescriptor([], 'length').enumerable
 
 上面代码中，`toString`和`length`属性的`enumerable`都是`false`，因此`for...in`不会遍历到这两个继承自原型的属性。
 
-另外，ES6 规定，所有 Class 的原型的方法都是不可枚举的。
+另外，==ES6 规定，所有 Class 的原型的方法都是不可枚举的。（构造函数的原型上的方法是可枚举的）==
 
 ```javascript
 Object.getOwnPropertyDescriptor(class {foo() {}}.prototype, 'foo').enumerable
@@ -393,7 +393,7 @@ Reflect.ownKeys({ [Symbol()]:0, b:0, 10:0, 2:0, a:0 })
 
 ## super 关键字
 
-我们知道，`this`关键字总是指向函数所在的当前对象，ES6 又新增了另一个类似的关键字`super`，指向当前对象的原型对象。
+我们知道，==`this`关键字总是指向函数所在的当前对象，ES6 又新增了另一个类似的关键字`super`，指向当前对象的原型对象。==
 
 ```javascript
 const proto = {
@@ -436,7 +436,7 @@ const obj = {
 
 上面三种`super`的用法都会报错，因为对于 JavaScript 引擎来说，这里的`super`都没有用在对象的方法之中。第一种写法是`super`用在属性里面，第二种和第三种写法是`super`用在一个函数里面，然后赋值给`foo`属性。目前，只有对象方法的简写法可以让 JavaScript 引擎确认，定义的是对象的方法。
 
-JavaScript 引擎内部，`super.foo`等同于`Object.getPrototypeOf(this).foo`（属性）或`Object.getPrototypeOf(this).foo.call(this)`（方法）。
+==JavaScript 引擎内部，`super.foo`等同于`Object.getPrototypeOf(this).foo`（属性）或`Object.getPrototypeOf(this).foo.call(this)`（方法）。==
 
 ```javascript
 const proto = {
@@ -493,7 +493,7 @@ let { x, ...y, ...z } = someObject; // 句法错误
 
 上面代码中，解构赋值不是最后一个参数，所以会报错。
 
-注意，解构赋值的拷贝是浅拷贝，即如果一个键的值是复合类型的值（数组、对象、函数）、那么解构赋值拷贝的是这个值的引用，而不是这个值的副本。
+==注意，解构赋值的拷贝是浅拷贝，即如果一个键的值是复合类型的值（数组、对象、函数）、那么解构赋值拷贝的是这个值的引用，而不是这个值的副本。==
 
 ```javascript
 let obj = { a: { b: 1 } };
@@ -504,7 +504,7 @@ x.a.b // 2
 
 上面代码中，`x`是解构赋值所在的对象，拷贝了对象`obj`的`a`属性。`a`属性引用了一个对象，修改这个对象的值，会影响到解构赋值对它的引用。
 
-另外，扩展运算符的解构赋值，不能复制继承自原型对象的属性。
+==另外，**扩展运算符的解构赋值（通过...运算符解构赋值）**，不能复制继承自原型对象的属性。==
 
 ```javascript
 let o1 = { a: 1 };
@@ -530,7 +530,7 @@ y // undefined
 z // 3
 ```
 
-上面代码中，变量`x`是单纯的解构赋值，所以可以读取对象`o`继承的属性；变量`y`和`z`是扩展运算符的解构赋值，只能读取对象`o`自身的属性，所以变量`z`可以赋值成功，变量`y`取不到值。ES6 规定，变量声明语句之中，如果使用解构赋值，扩展运算符后面必须是一个变量名，而不能是一个解构赋值表达式，所以上面代码引入了中间变量`newObj`，如果写成下面这样会报错。
+上面代码中，变量`x`是单纯的解构赋值，所以可以读取对象`o`继承的属性；变量`y`和`z`是扩展运算符的解构赋值，只能读取对象`o`自身的属性，所以变量`z`可以赋值成功，变量`y`取不到值。==ES6 规定，变量声明语句之中，如果使用解构赋值，扩展运算符后面必须是一个变量名，而不能是一个解构赋值表达式==，所以上面代码引入了中间变量`newObj`，如果写成下面这样会报错。
 
 ```javascript
 let { x, ...{ y, z } } = o;
@@ -577,7 +577,7 @@ foo
 // { a: 1 }
 ```
 
-如果扩展运算符后面不是对象，则会自动将其转为对象。
+==如果扩展运算符后面不是对象，则会自动将其转为对象。==
 
 ```javascript
 // 等同于 {...Object(1)}

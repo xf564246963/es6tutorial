@@ -125,7 +125,7 @@ Number.isInteger('15') // false
 Number.isInteger(true) // false
 ```
 
-注意，由于 JavaScript 采用 IEEE 754 标准，数值存储为64位双精度格式，数值精度最多可以达到 53 个二进制位（1 个隐藏位与 52 个有效位）。如果数值的精度超过这个限度，第54位及后面的位就会被丢弃，这种情况下，`Number.isInteger`可能会误判。
+注意，==由于 JavaScript 采用 IEEE 754 标准，数值存储为64位双精度格式，数值精度最多可以达到 53 个二进制位（1 个隐藏位与 52 个有效位）。如果数值的精度超过这个限度，第54位及后面的位就会被丢弃==，这种情况下，`Number.isInteger`可能会误判。
 
 ```javascript
 Number.isInteger(3.0000000000000002) // true
@@ -148,7 +148,7 @@ Number.isInteger(5E-325) // true
 
 ES6 在`Number`对象上面，新增一个极小的常量`Number.EPSILON`。根据规格，它表示 1 与大于 1 的最小浮点数之间的差。
 
-对于 64 位浮点数来说，大于 1 的最小浮点数相当于二进制的`1.00..001`，小数点后面有连续 51 个零。这个值减去 1 之后，就等于 2 的 -52 次方。
+对于 64 位浮点数来说，==大于 1 的最小浮点数相当于二进制的`1.00..001`，小数点后面有连续 51 个零。这个值减去 1 之后，就等于 2 的 -52 次方。==
 
 ```javascript
 Number.EPSILON === Math.pow(2, -52)
@@ -180,7 +180,7 @@ Number.EPSILON.toFixed(20)
 0.1 + 0.2 === 0.3 // false
 ```
 
-`Number.EPSILON`可以用来设置“能够接受的误差范围”。比如，误差范围设为 2 的-50 次方（即`Number.EPSILON * Math.pow(2, 2)`），即如果两个浮点数的差小于这个值，我们就认为这两个浮点数相等。
+==`Number.EPSILON`可以用来设置“能够接受的误差范围”。比如，误差范围设为 2 的-50 次方（即`Number.EPSILON * Math.pow(2, 2)`），即如果两个浮点数的差小于这个值，我们就认为这两个浮点数相等。==
 
 ```javascript
 5.551115123125783e-17 < Number.EPSILON * Math.pow(2, 2)
@@ -205,7 +205,7 @@ withinErrorMargin(1.1 + 1.3, 2.4) // true
 
 ## 安全整数和 Number.isSafeInteger()
 
-JavaScript 能够准确表示的整数范围在`-2^53`到`2^53`之间（不含两个端点），超过这个范围，无法精确表示这个值。
+==JavaScript 能够准确表示的整数范围在`-2^53`到`2^53`之间（不含两个端点），超过这个范围，无法精确表示这个值。==
 
 ```javascript
 Math.pow(2, 53) // 9007199254740992
@@ -700,7 +700,7 @@ Math.pow(2, 53) === Math.pow(2, 53) + 1 // true
 Math.pow(2, 1024) // Infinity
 ```
 
-[ES2020](https://github.com/tc39/proposal-bigint) 引入了一种新的数据类型 BigInt（大整数），来解决这个问题，这是 ECMAScript 的第八种数据类型。BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。
+==[ES2020](https://github.com/tc39/proposal-bigint) 引入了一种新的数据类型 BigInt（大整数），来解决这个问题，这是 ECMAScript 的第八种数据类型。BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。==
 
 ```javascript
 const a = 2172141653n;
@@ -743,7 +743,7 @@ BigInt 与普通整数是两种值，它们之间并不相等。
 typeof 123n // 'bigint'
 ```
 
-BigInt 可以使用负号（`-`），但是不能使用正号（`+`），因为会与 asm.js 冲突。
+==BigInt 可以使用负号（`-`），但是不能使用正号（`+`），因为会与 asm.js 冲突。==
 
 ```javascript
 -42n // 正确
