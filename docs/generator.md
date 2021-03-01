@@ -6,9 +6,9 @@
 
 Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。本章详细介绍 Generator 函数的语法和 API，它的异步编程应用请看《Generator 函数的异步应用》一章。
 
-Generator 函数有多种理解角度。语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。
+Generator 函数有多种理解角度。语法上，首先可以把它理解成，==Generator 函数是一个状态机，封装了多个内部状态。==
 
-执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。
+==执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。==
 
 形式上，Generator 函数是一个普通函数，但是有两个特征。一是，`function`关键字与函数名之间有一个星号；二是，函数体内部使用`yield`表达式，定义不同的内部状态（`yield`在英语里的意思就是“产出”）。
 
@@ -69,7 +69,7 @@ function*foo(x, y) { ··· }
 
 由于 Generator 函数返回的遍历器对象，只有调用`next`方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。`yield`表达式就是暂停标志。
 
-遍历器对象的`next`方法的运行逻辑如下。
+==遍历器对象的`next`方法的运行逻辑如下。==
 
 （1）遇到`yield`表达式，就暂停执行后面的操作，并将紧跟在`yield`后面的那个表达式的值，作为返回的对象的`value`属性值。
 
@@ -87,7 +87,7 @@ function* gen() {
 }
 ```
 
-上面代码中，`yield`后面的表达式`123 + 456`，不会立即求值，只会在`next`方法将指针移到这一句时，才会求值。
+上面代码中，==`yield`后面的表达式`123 + 456`，不会立即求值，只会在`next`方法将指针移到这一句时，才会求值。==
 
 `yield`表达式与`return`语句既有相似之处，也有区别。相似之处在于，都能返回紧跟在语句后面的那个表达式的值。区别在于每次遇到`yield`，函数暂停执行，下一次再从该位置继续向后执行，而`return`语句不具备位置记忆的功能。一个函数里面，只能执行一次（或者说一个）`return`语句，但是可以执行多次（或者说多个）`yield`表达式。正常函数只能返回一个值，因为只能执行一次`return`；Generator 函数可以返回一系列的值，因为可以有任意多个`yield`。从另一个角度看，也可以说 Generator 生成了一系列的值，这也就是它的名称的来历（英语中，generator 这个词是“生成器”的意思）。
 
@@ -105,7 +105,7 @@ setTimeout(function () {
 }, 2000);
 ```
 
-上面代码中，函数`f`如果是普通函数，在为变量`generator`赋值时就会执行。但是，函数`f`是一个 Generator 函数，就变成只有调用`next`方法时，函数`f`才会执行。
+上面代码中，函数`f`如果是普通函数，在为变量`generator`赋值时就会执行。但是，==函数`f`是一个 Generator 函数，就变成只有调用`next`方法时，函数`f`才会执行。==
 
 另外需要注意，`yield`表达式只能用在 Generator 函数里面，用在其他地方都会报错。
 
@@ -161,7 +161,7 @@ for (var f of flat(arr)) {
 // 1, 2, 3, 4, 5, 6
 ```
 
-另外，`yield`表达式如果用在另一个表达式之中，必须放在圆括号里面。
+另外，==`yield`表达式如果用在另一个表达式之中，必须放在圆括号里面。==
 
 ```javascript
 function* demo() {
@@ -173,7 +173,7 @@ function* demo() {
 }
 ```
 
-`yield`表达式用作函数参数或放在赋值表达式的右边，可以不加括号。
+==`yield`表达式用作函数参数或放在赋值表达式的右边，可以不加括号。==
 
 ```javascript
 function* demo() {
@@ -186,7 +186,7 @@ function* demo() {
 
 上一章说过，任意一个对象的`Symbol.iterator`方法，等于该对象的遍历器生成函数，调用该函数会返回该对象的一个遍历器对象。
 
-由于 Generator 函数就是遍历器生成函数，因此可以把 Generator 赋值给对象的`Symbol.iterator`属性，从而使得该对象具有 Iterator 接口。
+==由于 Generator 函数就是遍历器生成函数，因此可以把 Generator 赋值给对象的`Symbol.iterator`属性，从而使得该对象具有 Iterator 接口。==
 
 ```javascript
 var myIterable = {};
@@ -201,7 +201,7 @@ myIterable[Symbol.iterator] = function* () {
 
 上面代码中，Generator 函数赋值给`Symbol.iterator`属性，从而使得`myIterable`对象具有了 Iterator 接口，可以被`...`运算符遍历了。
 
-Generator 函数执行后，返回一个遍历器对象。该对象本身也具有`Symbol.iterator`属性，执行后返回自身。
+==Generator 函数执行后，返回一个遍历器对象。该对象本身也具有`Symbol.iterator`属性，执行后返回自身。==
 
 ```javascript
 function* gen(){
@@ -214,11 +214,11 @@ g[Symbol.iterator]() === g
 // true
 ```
 
-上面代码中，`gen`是一个 Generator 函数，调用它会生成一个遍历器对象`g`。它的`Symbol.iterator`属性，也是一个遍历器对象生成函数，执行后返回它自己。
+上面代码中，==`gen`是一个 Generator 函数，调用它会生成一个遍历器对象`g`。它的`Symbol.iterator`属性，也是一个遍历器对象生成函数，执行后返回它自己。==
 
 ## next 方法的参数
 
-`yield`表达式本身没有返回值，或者说总是返回`undefined`。`next`方法可以带一个参数，该参数就会被当作上一个`yield`表达式的返回值。
+==`yield`表达式本身没有返回值，或者说总是返回`undefined`。`next`方法可以带一个参数，该参数就会被当作上一个`yield`表达式的返回值。==
 
 ```javascript
 function* f() {
@@ -422,7 +422,7 @@ for (let n of numbers()) {
 
 ## Generator.prototype.throw()
 
-Generator 函数返回的遍历器对象，都有一个`throw`方法，可以在函数体外抛出错误，然后在 Generator 函数体内捕获。
+==Generator 函数返回的遍历器对象，都有一个`throw`方法，可以在函数体外抛出错误，然后在 Generator 函数体内捕获。==
 
 ```javascript
 var g = function* () {
@@ -446,7 +446,7 @@ try {
 // 外部捕获 b
 ```
 
-上面代码中，遍历器对象`i`连续抛出两个错误。第一个错误被 Generator 函数体内的`catch`语句捕获。`i`第二次抛出错误，由于 Generator 函数内部的`catch`语句已经执行过了，不会再捕捉到这个错误了，所以这个错误就被抛出了 Generator 函数体，被函数体外的`catch`语句捕获。
+==上面代码中，遍历器对象`i`连续抛出两个错误。第一个错误被 Generator 函数体内的`catch`语句捕获。`i`第二次抛出错误，由于 Generator 函数内部的`catch`语句已经执行过了，不会再捕捉到这个错误了，所以这个错误就被抛出了 Generator 函数体，被函数体外的`catch`语句捕获。==
 
 `throw`方法可以接受一个参数，该参数会被`catch`语句接收，建议抛出`Error`对象的实例。
 
@@ -683,7 +683,7 @@ g.return('foo') // { value: "foo", done: true }
 g.next()        // { value: undefined, done: true }
 ```
 
-上面代码中，遍历器对象`g`调用`return()`方法后，返回值的`value`属性就是`return()`方法的参数`foo`。并且，Generator 函数的遍历就终止了，返回值的`done`属性为`true`，以后再调用`next()`方法，`done`属性总是返回`true`。
+==上面代码中，遍历器对象`g`调用`return()`方法后，返回值的`value`属性就是`return()`方法的参数`foo`。并且，Generator 函数的遍历就终止了，返回值的`done`属性为`true`，以后再调用`next()`方法，`done`属性总是返回`true`。==
 
 如果`return()`方法调用时，不提供参数，则返回值的`value`属性为`undefined`。
 
@@ -700,7 +700,7 @@ g.next()        // { value: 1, done: false }
 g.return() // { value: undefined, done: true }
 ```
 
-如果 Generator 函数内部有`try...finally`代码块，且正在执行`try`代码块，那么`return()`方法会导致立刻进入`finally`代码块，执行完以后，整个函数才会结束。
+==如果 Generator 函数内部有`try...finally`代码块，且正在执行`try`代码块，那么`return()`方法会导致立刻进入`finally`代码块，执行完以后，整个函数才会结束。==
 
 ```javascript
 function* numbers () {
@@ -726,7 +726,7 @@ g.next() // { value: 7, done: true }
 
 ## next()、throw()、return() 的共同点
 
-`next()`、`throw()`、`return()`这三个方法本质上是同一件事，可以放在一起理解。它们的作用都是让 Generator 函数恢复执行，并且使用不同的语句替换`yield`表达式。
+`next()`、`throw()`、`return()`这三个方法本质上是同一件事，可以放在一起理解。==它们的作用都是让 Generator 函数恢复执行，并且使用不同的语句替换`yield`表达式。==
 
 `next()`是将`yield`表达式替换成一个值。
 
@@ -792,7 +792,7 @@ for (let v of bar()){
 
 上面代码中，`foo`和`bar`都是 Generator 函数，在`bar`里面调用`foo`，就需要手动遍历`foo`。如果有多个 Generator 函数嵌套，写起来就非常麻烦。
 
-ES6 提供了`yield*`表达式，作为解决办法，用来在一个 Generator 函数里面执行另一个 Generator 函数。
+==ES6 提供了`yield*`表达式，作为解决办法，用来在一个 Generator 函数里面执行另一个 Generator 函数。==
 
 ```javascript
 function* bar() {
@@ -859,7 +859,7 @@ gen.next().value // "close"
 
 上面例子中，`outer2`使用了`yield*`，`outer1`没使用。结果就是，`outer1`返回一个遍历器对象，`outer2`返回该遍历器对象的内部值。
 
-从语法角度看，如果`yield`表达式后面跟的是一个遍历器对象，需要在`yield`表达式后面加上星号，表明它返回的是一个遍历器对象。这被称为`yield*`表达式。
+==从语法角度看，如果`yield`表达式后面跟的是一个遍历器对象，需要在`yield`表达式后面加上星号，表明它返回的是一个遍历器对象。这被称为`yield*`表达式。==
 
 ```javascript
 let delegatedIterator = (function* () {
@@ -1082,7 +1082,7 @@ let obj = {
 
 ## Generator 函数的`this`
 
-Generator 函数总是返回一个遍历器，ES6 规定这个遍历器是 Generator 函数的实例，也继承了 Generator 函数的`prototype`对象上的方法。
+==Generator 函数总是返回一个遍历器，ES6 规定这个遍历器是 Generator 函数的实例，也继承了 Generator 函数的`prototype`对象上的方法。==
 
 ```javascript
 function* g() {}
@@ -1109,9 +1109,9 @@ obj.next();
 obj.a // undefined
 ```
 
-上面代码中，Generator 函数`g`在`this`对象上面添加了一个属性`a`，但是`obj`对象拿不到这个属性。
+上面代码中，==Generator 函数`g`在`this`对象上面添加了一个属性`a`，但是`obj`对象拿不到这个属性。==
 
-Generator 函数也不能跟`new`命令一起用，会报错。
+==Generator 函数也不能跟`new`命令一起用，会报错。==
 
 ```javascript
 function* F() {
